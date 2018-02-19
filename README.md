@@ -340,3 +340,87 @@ d3.select('#viz').append('svg')
 * we use the xScale in the d3 width attribute using the bandWidth() method to set bar width asuch as spread the graph accross the width
 * also we use xScale to position the bars.
 * we use padding methods to add padding between the bars in the chart.
+
+### Creating meaningful color scales
+
+* use colorscales for our charts
+* we will make the height of our bar meaningful to the color creating an array of colors
+* we create a new color scale as alinear scale with domain *input" the bardata range and output a range of colors
+* we use a callback in 'fill using the attr method and not style.'
+* in the callback we return the colorscale
+
+```
+var bardata = [12, 78, 45, 15, 45, 66, 24, 64];
+var height = 400,
+    width = 600,
+    barWidth = 50,
+    barOffset = 5;
+
+var yScale = d3.scaleLinear()
+    .domain([0, d3.max(bardata)])
+    .range([0,height]);
+
+var xScale = d3.scaleBand()
+    .domain(bardata)
+    .paddingInner(.3)
+    .paddingOuter(.1)
+    .range([0, width]);
+
+var colors = d3.scaleLinear()
+    .domain([0, d3.max(bardata)])
+    .range(['#FFBB32', '#C61C6F']);
+
+d3.select('#viz').append('svg')
+  .attr('width', width)
+  .attr('height', height)
+  .style('background', '#C9D7D6')
+.selectAll('rect').data(bardata)
+  .enter().append('rect')
+    .attr('fill', function(d) {
+      return colors(d);
+    })
+    .attr('width', function(d) {
+      return xScale.bandwidth();
+    })
+    .attr('height', function(d) {
+      return yScale(d);
+    })
+    .attr('x', function(d) {
+      return xScale(d);
+    })
+    .attr('y', function(d) {
+      return height - yScale(d);
+    });
+```
+
+* we change the color scale to reflect the position of the rdata in the array.
+
+```
+var colors = d3.scaleLinear()
+    .domain([0, bardata.length])
+    .range(['#FFBB32', '#C61C6F']);
+...
+    .attr('fill', function(d, i) {
+      return colors(i);
+    })
+```
+
+* we test our chart in a lot of random generated bardata array with
+
+```
+var bardata = [];
+    for (var i = 0; i<100; i++) {
+      bardata.push(Math.random() * 30);
+    }
+```
+
+* we add more steps in our colorscale and more colors to be used
+
+```
+var colors = d3.scaleLinear()
+    .domain([0, bardata.length * .33,
+                bardata.length * .66,
+                bardata.length])
+    .range(['#FFBB32', '#C61C6F', '#268BD2', '#85992C']);
+```
+
