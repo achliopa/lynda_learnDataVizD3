@@ -291,4 +291,52 @@ d3.select('#viz').append('svg')
 
 ### Using ordinal scales
 
-*
+* linear vs ordinal scale is like uordered and ordered list
+* if we use values that have an inherit order we use ordinal scale (like time based values with time period on x axis)
+* simplest ordinal scale is scaleBand() regular barcharts of ordered data with managed space between them
+* we define renge() but also padding(), paddingInner() paddingOuter()
+* properties: bandWidth() width of bars
+
+```
+var bardata = [12, 78, 45, 15,67, 89, 93];
+var height = 400,
+    width = 600,
+    barWidth = 50,
+    barOffset = 5;
+
+var yScale = d3.scaleLinear()
+  .domain([0, d3.max(bardata)])
+  .range([0,height]);
+
+var xScale = d3.scaleBand()
+  .domain(bardata)
+  // .padding(.2)
+  .paddingInner(.3)
+  .paddingOuter(.1)
+  .range([0, width]);
+
+d3.select('#viz').append('svg')
+  .attr('width', width)
+  .attr('height', height)
+  .style('background', '#C9D7D6')
+.selectAll('rect').data(bardata)
+  .enter().append('rect')
+    .style('fill', '#C61C6F')
+    .attr('width', function(d) {
+      return xScale.bandwidth();
+    })
+    .attr('height', function(d) {
+      return yScale(d);
+    })
+    .attr('x', function(d, i) {
+      return xScale(d);
+    })
+    .attr('y', function(d) {
+      return height - yScale(d);
+    });
+```
+
+* in the above example we add an xScale which is a scale band scaling the x axis to use all availalbe width.
+* we use the xScale in the d3 width attribute using the bandWidth() method to set bar width asuch as spread the graph accross the width
+* also we use xScale to position the bars.
+* we use padding methods to add padding between the bars in the chart.
