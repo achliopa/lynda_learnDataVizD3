@@ -509,3 +509,36 @@ var myChart = d3.select('#viz').append('svg')
     .ease(d3.easeBounceOut);
 ```
 
+
+### Adding a tooltip
+
+* we can show tooltips by appending a div in the body and styling it
+* in an event handler we call the tooltip variable, passing the data and setting its absolute position using the current event object data (e.g pageX and pageY). we can also animate it to show by changing its oapcity with a transition
+
+```
+// setting up tooltip
+
+var tooltip = d3.select('body')
+                .append('div')
+                .style('position', 'absolute')
+                .style('padding', '0 10px')
+                .style('opacity', 0)
+                .style('background', 'white');
+
+// binding tooltip to event and data object and showing it in an event handler
+
+.on('mouseover', function(d) {
+
+      tooltip.transition()
+              .style('opacity', .9);
+
+      tooltip.html(d)
+              .style('left', (d3.event.pageX -35) +'px')
+              .style('top', (d3.event.pageY -30) +'px');
+.........
+```
+
+## Section 4 - USing Data
+
+
+
