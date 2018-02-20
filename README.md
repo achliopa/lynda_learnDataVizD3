@@ -562,5 +562,17 @@ d3.json('js/data/forecast.json', function(d) {
 
 * we use the json method to parse data from a file and the callback to use them. in the callback we put all the code. we fill our array with data from the parsed object.
 
+### Using Meaningful Colors
+
+* we make our colors value relevant and not index relevant
+* we set linearscale domain temp related and change the color range
+* we bind the color sclae with data and not index. 
+* we do formatting of the tooltip html
+
+```
+tooltip.html(
+            '<div style="font-size: 2rem; font-weight: bold">'+d+'&deg;</div>'
+          )
+```
 
 
