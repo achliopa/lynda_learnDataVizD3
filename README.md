@@ -628,4 +628,42 @@ myChart = d3.select('#viz').append('svg')
 * we add it to the svg container heigh and width
 * and we move the whole thing with translate
 
+### Adding a time-based guide
+
+* to add timebased scale we use scaleTime()
+* we use date based domain
+we use special ticks
+* we group elements
+* we create an array for the times for the parsed json data
+
+```
+  for (var i = 0; i<d.list.length; i++) {
+    temperatures.push(d.list[i].main.temp);
+    dates.push(new Date(d.list[i].dt_txt));
+  }
+```
+
+* we create a new scale for dates (scaleTime)
+
+```
+  xAxisValues = d3.scaleTime()
+    .domain([dates[0], dates[(dates.length-1)]])
+    .range([0, width]);
+```
+
+* we add the ticks usign 1 tick per day
+
+```
+  xAxisTicks = d3.axisBottom(xAxisValues)
+    .ticks(d3.timeDay.every(1));
+```
+
+* we add the guide
+
+```
+  xGuide = d3.select('#viz svg').append('g')
+            .attr('transform', 'translate(20,'+ height +')')
+            .call(xAxisTicks);
+```
+
 
