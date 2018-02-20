@@ -424,3 +424,38 @@ var colors = d3.scaleLinear()
     .range(['#FFBB32', '#C61C6F', '#268BD2', '#85992C']);
 ```
 
+
+### Adding Events
+
+* we can call events using the on(EVT) method and use Vanilla JS calls to respond to them
+* browser supported event like mouseout, mouseover etc can be used
+* when we have the event we usually modify the properties of the target element
+* to get to the properties we use *this* keyword
+* we add the follwoing snippet in the end of our d3 method chain to test it
+
+```
+    .on('mouseover', function(d) {
+      d3.select(this)
+        .style('opacity', .5)
+    })
+```
+
+* this method subscribes to the mouseover
+* whith the callback using the bardata we are in a specific bar which we target with this to style it
+* we complete this example by reseting the change at mouseout event. also we store the fill color in a temp variable and then get it back at mouseout
+
+```
+    .on('mouseover', function(d) {
+      tempColor = this.style.fill;
+      d3.select(this)
+        .style('opacity', .5)
+        .style('fill', 'yellow')
+    })
+    .on('mouseout', function(d) {
+      this.style.fill = tempColor;
+      d3.select(this)
+        .style('opacity', 1)
+    })
+    ;
+```
+
