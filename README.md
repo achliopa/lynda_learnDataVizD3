@@ -606,4 +606,26 @@ tooltip.html(
 * we use ticks() method to add a ruler of 10 stops passing the axisvalue as values and a left poisition
 * to shopw it we add a group to the svg and we append a second grouppassing the ticks and moving it left  BIT.
 
+### Create margins
+
+* we do setup to be able to add margins in a single place
+
+```
+  var temperatures = [],
+      margin = { top: 0, right: 0, bottom: 30, left: 30 },
+      height = 400 -margin.top - margin.bottom,
+      width = 600 -margin.right -margin.left;
+...............
+myChart = d3.select('#viz').append('svg')
+    .attr('width', width + margin.right  + margin.left)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate('+margin.left+','+margin.right+')')
+...............
+```
+
+* in the aforementioned code we add a margin object and remove it from static height and width
+* we add it to the svg container heigh and width
+* and we move the whole thing with translate
+
 
