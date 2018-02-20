@@ -459,3 +459,53 @@ var colors = d3.scaleLinear()
     ;
 ```
 
+### Using transitions and animations
+
+* a way of animating a selection
+* we use d3 method transition() to set it up
+* there are a lot of ethods to modify the transition like duration() to control its speed, delay() to make it wait
+* e.g we chain them ina event handler
+
+```
+    .on('mouseover', function(d) {
+      tempColor = this.style.fill;
+      d3.select(this)
+        .transition()
+        .delay(400)
+        .duration(500)
+        .style('fill', 'yellow')
+    })
+```
+
+* a noce transition is to target all ther chart by assigning a variable. and set initial height and y dimension to 0. then use the var to add a transition to make it appear smoothly
+
+```
+var myChart = d3.select('#viz').append('svg')
+  ...
+    // .attr('height', function(d) {
+    //   return yScale(d);
+    // })
+    .attr('height', 0)
+    .attr('x', function(d) {
+      return xScale(d);
+    })
+    // .attr('y', function(d) {
+    //   return height - yScale(d);
+    // })
+    .attr('y', height)
+    ...;
+
+    myChart.transition()
+    .attr('height', function(d) {
+      return yScale(d);
+    })
+    .attr('y', function(d) {
+      return height - yScale(d);
+    })
+    .delay(function(d, i) {
+      return i * 20;
+    })
+    .duration(500)
+    .ease(d3.easeBounceOut);
+```
+
