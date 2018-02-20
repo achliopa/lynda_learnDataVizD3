@@ -541,4 +541,26 @@ var tooltip = d3.select('body')
 ## Section 4 - USing Data
 
 
+### Using external data
+
+* d3 AJAX 
+* can import data from .csv .html .json .text tsv .xml
+* we hanndle these data in a callback
+* we will consume a json file for our example
+* we parse json in our visualization using the d3.json() method
+
+```
+d3.json('js/data/forecast.json', function(d) {
+
+  var temperatures = [];
+
+  for (var i = 0; i<d.list.length; i++) {
+    temperatures.push(d.list[i].main.temp);
+  }
+}
+```
+
+* we use the json method to parse data from a file and the callback to use them. in the callback we put all the code. we fill our array with data from the parsed object.
+
+
 
