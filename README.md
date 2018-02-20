@@ -575,4 +575,35 @@ tooltip.html(
           )
 ```
 
+### Adding a simple guide
+
+* guides is a way to add meaningful information in our chart. these are the axis labels
+* for regular charts we use regular scales
+* we set the scale position with axisTop, axisRight, axisLeft, axisbottom
+* we need tick methods (scale elements)
+* and group methods for the ticks
+
+```
+ yAxisValues = d3.scaleLinear()
+    .domain([0, d3.max(temperatures)])
+    .range([height, 0]);
+
+  yAxisTicks = d3.axisLeft(yAxisValues)
+  .ticks(10);
+
+  ............
+    myChart = d3.select('#viz').append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+  ...............
+  yGuide = d3.select('#viz svg').append('g')
+              .attr('transform', 'translate(20, 0)')
+              .call(yAxisTicks);
+```
+
+* we set a new linear scale for the axis values. the reason for this is that the scale must have a reverse range as canvas is top left zeroed
+* we use ticks() method to add a ruler of 10 stops passing the axisvalue as values and a left poisition
+* to shopw it we add a group to the svg and we append a second grouppassing the ticks and moving it left  BIT.
+
 
